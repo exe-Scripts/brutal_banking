@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css"></link>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>Brutal Banking</title>
+</head>
+
+<body style="background: none;">
+
+    <section class="cards main_bank p-4">
+        <button class="log_out" id="log_out" onclick="Close()"><i class="fa-solid fa-right-from-bracket"></i> Log out</button>
+            <div class="row h-100">
+              <div class="col-2 w-25" style="border-right: solid 2px #939393;">
+                <div class="row row-cols-1">
+                    <div class="col"><div class="logo"></div><hr></div>
+                    <div class="col">
+                        <div class="user float-start"></div>
+                        <div class="username float-start">User Name <br>Wallet <div class="wallet_amount float-end">$0</div></div>
+                        <hr>
+                    </div>
+                    <div class="col mb-2"><button class="sidebar" id="overview" onclick="UseButton(id)"><i class="fa-solid fa-house-user"></i> Overview</button></div>
+                    <div class="col mb-2"><button class="sidebar" id="accounts" onclick="UseButton(id)"><i class="fa-solid fa-credit-card"></i> Accounts</button></div>
+                    <div class="col mb-2"><button class="sidebar" id="settings" onclick="UseButton(id)"><i class="fa-solid fa-gear"></i> Settings</button></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="page_datas">
+                    <div class="row" style="width: 137%;">
+                        <div class="col-4">
+                            <h1 class="fw-bold" id="account_name">Current account</h1>
+                            <div class="card_bg" onclick="Change_account()">
+                                <div class="current_card">
+                                    <img src="assets/visa_logo.png" class="visa_logo">
+                                    <h3 class="card_visa">Visa Classic</h3>
+                                    <div class="wifi_logo"><i class="fa-solid fa-wifi fa-rotate-90"></i></div>
+                                    <img src="assets/card_chip.png" class="card_chip">
+                                    <h3 class="card_owner">Jou Rogan</h3>
+                                </div>
+                            </div>
+                            <hr>
+                            <h2>Informations</h2>
+                            <div class="card_infos">
+                                <h3 class="mx-2 mt-4">Balance <div class="balance float-end">$0</div></h3>
+                                <h4 class="mx-2 mt-3">IBAN <div class="iban float-end">BS842193</div></h4>
+                                <h4 class="mx-2 mt-3">Owner <div class="owner float-end">You</div></h4>
+                                <h4 class="mx-2 mt-3">Permission <div class="permission float-end">All</div></h4>
+                                <h4 class="mx-2 mt-3">Created <div class="created float-end">2023/05/02</div></h4>
+                            </div>
+                            <button class="transaction_btn float-start px-3 mt-4" data-bs-toggle="modal" data-bs-target="#new_partner_modal"><i class="fa-solid fa-plus"></i> <i class="fa-solid fa-user"></i></button>
+                            <button class="transaction_btn float-end px-3 mt-4" data-bs-toggle="modal" data-bs-target="#new_transaction_modal"><i class="fa-solid fa-plus"></i> New transaction</button>
+                        </div>
+                        <div class="col">
+                            <div class="analytics mt-3 px-2">
+                                <div class="row">
+                                    <div class="col"><h5 class="ms-2 mt-2 pt-2">Your balance <div class="balance_block float-end mt-2 me-4"></div></h5></div>
+                                    <div class="col"><h4 class="m-2 pt-2 text-end">Analytics</h4></div>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="payments mt-3">
+                                <div class="row">
+                                    <div class="col"><button class="payment_btn px-3 m-2 float-start" data-bs-toggle="modal" data-bs-target="#payments_modal"><i class="fa-solid fa-up-right-from-square fa-flip-horizontal"></i> View all</button></div>
+                                    <div class="col"><h4 class="mt-2 me-2 text-end">Payment history</h4></div>
+                                </div>
+                                <div class="payments_con">
+                                    <div class="table_container">
+                                        <div class="table_element">
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="type align-middle"><i class="fa-solid fa-angles-down"></i></th>
+                                                        <th class="amount align-middle">$55.00</th>
+                                                        <th class="action align-middle">Otto</th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3"></div>
+                      </div>
+                </div>
+            </div>
+          </div>
+    </section>
+
+    <section class="pincode_section">
+        <button class="payment_btn px-3 m-3" onclick="Close()"><i class="fa-solid fa-chevron-left"></i> Back</button>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1 class="text-center">Input PIN</h1>
+            <div class="dots d-flex">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="row row-cols-3 mt-4" style="width: 80%;">
+                <div class="col"><div class="number">1</div></div>
+                <div class="col"><div class="number">2</div></div>
+                <div class="col"><div class="number">3</div></div>
+                <div class="col"><div class="number">4</div></div>
+                <div class="col"><div class="number">5</div></div>
+                <div class="col"><div class="number">6</div></div>
+                <div class="col"><div class="number">7</div></div>
+                <div class="col"><div class="number">8</div></div>
+                <div class="col"><div class="number">9</div></div>
+                <div class="col"><div class="number"><i class="fa-solid fa-delete-left fa-flip-horizontal"></i></div></div>
+                <div class="col"><div class="number">0</div></div>
+                <div class="col"><div class="number"><i class="fa-solid fa-right-to-bracket"></i></div></div>
+            </div>
+        </div>
+        
+        
+    </section>
+
+    <div class="modal fade" id="payments_modal">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col"><h2 class="modal-title m-3 text-end">Payment history</h2></div>
+                </div>
+                <div class="payments_con">
+                    <div class="table_header">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th class="type align-middle">Type</th>
+                                    <th class="amount align-middle">Amount</th>
+                                    <th class="action align-middle">Action</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table_container_big">
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="permissions_modal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col">
+                        <button class="payment_btn float-start px-3" id="perm_back" data-bs-dismiss="modal" onclick="SavePermission()"><i class="fa-solid fa-chevron-left"></i> Back</button>
+                        <button class="payment_btn float-start px-3 ms-3" id="new_member_modal_btn" disabled data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#new_member_modal">Add new member</button>
+                    </div>
+                    <div class="col"><h2 class="modal-title m-3 text-end">Permissions</h2></div>
+                </div>
+                <div class="payments_con">
+                    <div class="table_header">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th class="per_name text-center w-25 align-middle">Name</th>
+                                    <th class="per text-center w-25 align-middle">Permission</th>
+                                    <th class="limit text-center w-25 align-middle">Daily limit</th>
+                                    <th class="del text-center w-25 align-middle">Delete</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="per_table_container">
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new_member_modal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#permissions_modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">New Member</h2></div>
+                </div> 
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Player ID</h3>
+                            <div class="input-group input-group-lg ms-3 w-50 mb-3">
+                                <input type="text" id="in_target_id" class="form-control" placeholder="ID" onkeypress="return isNumber(event)" style="background-color: var(--secondary_color);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Permission</h3>
+                            <div class="dropdown mb-3 fs-5">
+                                <button class="payment_btn fs-6 px-3 ms-3 dropdown-toggle" id="add_perm_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">Desposit</button>
+                                <ul class="dropdown-menu">
+                                    <li><button class="dropdown-item" id="all" onclick="ChangeAddPer(id)">All</button></li>
+                                    <li><button class="dropdown-item" id="withdraw" onclick="ChangeAddPer(id)">Withdraw</button></li>
+                                    <li><button class="dropdown-item" id="deposit" onclick="ChangeAddPer(id)">Deposit</button></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Daily limit</h3>
+                            <div class="input-group input-group-lg ms-3 w-50 mb-2">
+                                <input type="text" id="in_daily_limit" class="form-control" placeholder="Limit" onkeypress="return isNumber(event)" oninput="SyncInputData(id)" style="background-color: var(--secondary_color);">
+                            </div>
+                            <input type="range" class="range ms-3 mb-2" value="1" min="1" max="99999" id="range_daily_limit" oninput="SyncRangeData(id)">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button class="transaction_btn float-end px-3" id="add_new_member" disabled onclick="AddNewMember()"><i class="fa-solid fa-plus"></i> Add</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new_account_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8">
+                        <h2 class="modal-title mt-3 me-3 text-end">New account</h2>
+                        <h5 class="me-4 mb-3 fs-6 text-end" id="new_account_cost"></h5>
+                    </div>
+                </div> 
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Account name</h3>
+                            <div class="input-group input-group-lg ms-3 w-50 mb-3">
+                                <input type="text" id="in_acc_name" class="form-control" placeholder="Name" oninput="setlenght(id)" style="background-color: var(--secondary_color);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button class="transaction_btn float-end px-3" id="create_sub_acc" disabled data-bs-dismiss="modal" onclick="Create_account()"><i class="fa-solid fa-plus"></i> Create</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new_transaction_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">New transaction</h2></div>
+                </div> 
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <button class="tran_menu_btn px-3 w-75 mt-2" id="choose_deposit" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deposit_modal">Deposit</button>
+                    <button class="tran_menu_btn px-3 w-75 mt-2" id="choose_withdraw" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#withdraw_modal">Withdraw</button>
+                    <button class="tran_menu_btn px-3 w-75 mt-2" id="choose_transfer" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#transfer_modal">Transfer</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deposit_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#new_transaction_modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">Deposit</h2></div>
+                </div> 
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" id="in_deposit_money" class="form-control mx-3 w-100 text-center fs-1" placeholder="Amount" onkeypress="return isNumber(event)" oninput="SetMaximumMoneytran(id); SyncInputData(id)" style="height: 100px;">
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <input type="range" class="range ms-3 mb-2" min="1" max="99999" id="range_deposit_money" oninput="SyncRangeData(id)">
+                    <button class="transaction_btn w-75 mt-2" id="deposit_money" data-bs-dismiss="modal" disabled onclick="DepositeMoney()">Deposit</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="withdraw_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#new_transaction_modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">Withdraw</h2></div>
+                </div> 
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" id="in_withdraw_money" class="form-control mx-3 w-100 text-center fs-1" placeholder="Amount" onkeypress="return isNumber(event)" oninput="SetMaximumMoneytran(id); SyncInputData(id)" style="height: 100px;">
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <input type="range" class="range ms-3 mb-2" min="1" max="99999" id="range_withdraw_money" oninput="SyncRangeData(id)">
+                    <button class="transaction_btn w-75 mt-2" id="withdraw_money" data-bs-dismiss="modal" disabled onclick="WithdrawMoney()">Withdraw</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transfer_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#new_transaction_modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">Transfer</h2></div>
+                </div> 
+                <div class="input-group input-group-lg mb-3">
+                    <input type="text" id="in_tran_money" class="form-control mx-3 w-100 text-center fs-1" placeholder="Amount" onkeypress="return isNumber(event)" oninput="SetMaximumMoneytran(id); SyncInputData(id)" style="height: 100px;">
+                </div>
+                <div class="d-flex flex-column justify-content-center align-items-center transfer_con">
+                    <input type="range" class="range ms-3 mb-2" min="1" max="99999" id="range_tran_money" oninput="SyncRangeData(id)">
+                    
+                    <hr>
+
+                    <div class="inputs_container">
+                        <div class="input-group input-group-lg mb-3 px-5">
+                            <input type="text" id="in_partner" class="form-control rounded typeahead text-center fs-2" data-provide="typeahead" placeholder="Partner" onchange="IsRealPartner(id)" oninput="IsRealPartner(id)" style="height: 60px;">
+                        </div>
+    
+                        <div class="input-group input-group-lg mb-4 px-5">
+                            <input type="text" id="in_iban_money" class="form-control rounded text-center fs-2" placeholder="Iban" oninput="SetLengthIban(id)" onkeypress="return isNumber(event)" style="height: 60px;">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3 w-75">
+                        <div class="col-9">
+                            <h4>Group transfer</h4>
+                        </div>
+                        <div class="col">
+                            <label class="custom-control ios-switch float-end">
+                                <input type="checkbox" id="group_transfer" class="ios-switch-control-input" onclick="ChangeGroupTransfer(id)">
+                                <span class="ios-switch-control-indicator"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="partners_con mx-3 w-100"></div>
+
+                    <button class="transaction_btn w-75 mt-3" id="tran_money" data-bs-dismiss="modal" disabled onclick="TransferMoney()">Transfer</button>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="new_partner_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col-8"><h2 class="modal-title m-3 text-end">New Partner</h2></div>
+                </div> 
+                <div class="row row-cols-1">
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Partner name</h3>
+                            <div class="input-group input-group-lg ms-3 w-50 mb-3">
+                                <input type="text" id="in_partner_name" class="form-control typeahead rounded" placeholder="Name" onchange="CanAddPartner()" oninput="CanAddPartner()" style="background-color: var(--secondary_color);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="addmember_element p-1 w-75">
+                            <h3 class="m-2">Partner iban</h3>
+                            <div class="input-group input-group-lg ms-3 w-50 mb-3">
+                                <input type="text" id="in_partner_iban" class="form-control" placeholder="Iban" oninput="SetLengthIban(id)" onkeypress="return isNumber(event)" style="background-color: var(--secondary_color);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button class="transaction_btn float-end px-3 ms-3" id="add_new_partner" disabled onclick="AddNewPartner()"><i class="fa-solid fa-plus"></i> Add</button>
+                        <button class="transaction_btn float-end px-3" id="remove_partner" disabled onclick="RemovePartner()"><i class="fa-solid fa-minus"></i> Remove</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="sure_modal">
+        <div class="modal-dialog modal-dialog-centered modal-md">
+          <div class="modal-content pb-2" style="background: var(--secondary_color); border-radius: 13px; color: var(--text_color);">
+            <div class="modal-body">
+                <div class="row row-cols-1">
+                    <div class="col"><button class="payment_btn float-start px-3" data-bs-dismiss="modal"><i class="fa-solid fa-chevron-left"></i> Back</button></div>
+                    <div class="col"><h1 class="modal-title m-3 text-center">Are you sure?</h1></div>
+                </div> 
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col-4"><button class="transaction_btn px-3 mt-2 w-100 fs-2" id="no" data-bs-dismiss="modal">No</button></div>
+                    <div class="col-4"><button class="transaction_btn px-3 mt-2 w-100 fs-2" id="yes" data-bs-dismiss="modal" onclick="returnsure(id)">Yes</button></div>
+                    <div class="col"></div>
+                </div> 
+            </div>
+          </div>
+        </div>
+    </div>
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js">
+</script>
+<script src="script.js"></script>
+</html>
